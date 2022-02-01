@@ -11,6 +11,8 @@ const GenerateMap = () => {
   const [addressHistory, setAddressHistory] = useState([]);
   const mapContainerRef = useRef(null);
 
+  mapboxgl.accessToken = process.env.ACCESS_TOKEN;
+
   useEffect(() => {
     if (map.current) return;
 
@@ -22,13 +24,12 @@ const GenerateMap = () => {
     });
   }, []);
 
-  mapboxgl.accessToken = process.env.MAP_TOKEN;
-
   const fetchData = useCallback((address) => {
     const geocodingClient = mbxGeocoding({
       accessToken: mapboxgl.accessToken,
     });
 
+    // geocoding with countries
     return geocodingClient
       .forwardGeocode({
         query: address,
@@ -67,11 +68,11 @@ const GenerateMap = () => {
         setAddressHistory([...addressHistory, <li key={uuidv4()}>{updatedAddress + ': ' + `[${marker.geometry.coordinates}]`}</li>])
         console.log(addressHistory)
         setUpdatedAddress('');
-
+  
         new mapboxgl.Marker(el)
           .setLngLat(marker.geometry.coordinates)
           .setPopup(
-            new mapboxgl.Popup({ offset: 25 })
+            new mapboxgl.Popup({ offset: 25 }) 
               .setHTML('<p>' + marker.properties.description + '</p>')
           )
           .addTo(map.current);
