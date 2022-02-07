@@ -12,6 +12,17 @@ code {
     monospace;
 }
 
+.mapInfoWindow {
+  text-align: left;
+}
+
+.mapRecordActions .MapActionBtn {
+  height: 20px;
+  line-height: 20px;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+
 .map-container {
   height: 400px;
   }
